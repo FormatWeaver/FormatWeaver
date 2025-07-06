@@ -1,0 +1,8 @@
+{
+  "name": "Format Weaver",
+  "description": "An application that intelligently creates a reusable template from a user-provided example. Define variables, fill a generated form, and instantly weave new data into the original format.",
+  "requestFramePermissions": [
+    "display-capture"
+  ],
+  "prompt": ""
+}

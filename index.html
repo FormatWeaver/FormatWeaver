@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 12.5L2 19L5 22L13.5 14' stroke='%230ea5e9' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M11.5 10L22 2L19 5L14 8.5' stroke='%230ea5e9' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M9 15L15 9' stroke='%230ea5e9' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M14.5 17C15.8807 17 17 15.8807 17 14.5C17 13.1193 15.8807 12 14.5 12C13.1193 12 12 13.1193 12 14.5C12 15.8807 13.1193 17 14.5 17Z' stroke='%230ea5e9' stroke-width='1.5'/%3E%3Cpath d='M9.5 12C10.8807 12 12 10.8807 12 9.5C12 8.11929 10.8807 7 9.5 7C8.11929 7 7 8.11929 7 9.5C7 10.8807 8.11929 12 9.5 12Z' stroke='%230ea5e9' stroke-width='1.5'/%3E%3C/svg%3E" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Format Weaver</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+      if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark')
+      } else {
+        document.documentElement.classList.remove('dark')
+      }
+    </script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              'primary': '#0ea5e9', // sky-500
+              'primary-hover': '#0284c7', // sky-600
+              'secondary': '#4f46e5', // indigo-600
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      /* Custom selection color */
+      ::selection {
+        background-color: #0ea5e9; /* primary color */
+        color: #ffffff;
+      }
+
+      /* Base styles for light and dark mode */
+      body {
+        /* Light mode default */
+        background-color: #f9fafb; /* gray-50 */
+        background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
+        background-size: 16px 16px;
+      }
+      .dark body {
+        /* Dark mode */
+        background-color: #0f172a; /* slate-900 */
+        background-image: radial-gradient(#33415533 1px, transparent 1px);
+      }
+      
+      /* Animation Keyframes */
+      @keyframes modal-in {
+        from { opacity: 0; transform: translateY(-10px) scale(0.98); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
+      }
+      @keyframes toast-in-out {
+        0% { transform: translateY(-100%); opacity: 0; }
+        10%, 90% { transform: translateY(0); opacity: 1; }
+        100% { transform: translateY(-100%); opacity: 0; }
+      }
+      .animate-modal-in {
+        animation: modal-in 0.2s ease-out;
+      }
+      .animate-toast {
+        animation: toast-in-out 5s ease-in-out forwards;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://esm.sh/react-dom@^19.1.0/",
+    "react/": "https://esm.sh/react@^19.1.0/",
+    "react": "https://esm.sh/react@^19.1.0",
+    "jszip": "https://esm.sh/jszip@3.10.1",
+    "papaparse": "https://esm.sh/papaparse@5.4.1",
+    "@google/genai": "https://esm.sh/@google/genai",
+    "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2.45.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="text-gray-800 dark:text-slate-300 transition-colors duration-300">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
