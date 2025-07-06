@@ -1,17 +1,10 @@
 import { createClient } from '@supabase/supabase-js'
-import type { Token, Variable, WorkspaceMemberRole, SubscriptionPlan } from './types';
 
 // Use the provided Supabase URL and Anon Key
 const supabaseUrl = 'https://hebanactdmnjwymiagvt.supabase.co';
 const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhlYmFuYWN0ZG1uand5bWlhZ3Z0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE3Mjc0MjQsImV4cCI6MjA2NzMwMzQyNH0.DmtgQqUKdADd4P-yz0yvCs9ZiurskAeXjvHCqwLpeY4';
 
-export type Json =
-  | string
-  | number
-  | boolean
-  | null
-  | { [key: string]: Json | undefined }
-  | Json[]
+export type Json = any;
 
 export interface Database {
   public: {
@@ -19,19 +12,19 @@ export interface Database {
       user_profiles: {
         Row: {
           user_id: string
-          subscription_plan: SubscriptionPlan
+          subscription_plan: "Free" | "Pro" | "Team"
           email: string
           stripe_customer_id: string | null
         }
         Insert: {
           user_id: string
-          subscription_plan: SubscriptionPlan
+          subscription_plan: "Free" | "Pro" | "Team"
           email: string
           stripe_customer_id?: string | null
         }
         Update: {
           user_id?: string
-          subscription_plan?: SubscriptionPlan
+          subscription_plan?: "Free" | "Pro" | "Team"
           email?: string
           stripe_customer_id?: string | null
         }
@@ -57,17 +50,17 @@ export interface Database {
         Row: {
           workspace_id: string
           user_id: string
-          role: WorkspaceMemberRole
+          role: "Owner" | "Editor"
         }
         Insert: {
           workspace_id: string
           user_id: string
-          role: WorkspaceMemberRole
+          role: "Owner" | "Editor"
         }
         Update: {
           workspace_id?: string
           user_id?: string
-          role?: WorkspaceMemberRole
+          role?: "Owner" | "Editor"
         }
       }
       folders: {

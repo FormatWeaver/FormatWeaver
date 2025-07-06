@@ -20,32 +20,56 @@
         theme: {
           extend: {
             colors: {
-              'primary': '#0ea5e9', // sky-500
-              'primary-hover': '#0284c7', // sky-600
-              'secondary': '#4f46e5', // indigo-600
+              primary: 'var(--color-primary)',
+              'primary-hover': 'var(--color-primary-hover)',
+              secondary: 'var(--color-secondary)',
+              'text-base': 'var(--color-text-base)',
+              'text-muted': 'var(--color-text-muted)',
+              'bg-base': 'var(--color-bg-base)',
+              'bg-muted': 'var(--color-bg-muted)',
+              'border-base': 'var(--color-border-base)',
+              'border-muted': 'var(--color-border-muted)',
             }
           }
         }
       }
     </script>
     <style>
+      :root {
+        --color-primary: #0ea5e9; /* sky-500 */
+        --color-primary-hover: #0284c7; /* sky-600 */
+        --color-secondary: #4f46e5; /* indigo-600 */
+        --color-text-base: #1f2937; /* gray-800 */
+        --color-text-muted: #6b7280; /* gray-500 */
+        --color-bg-base: #f9fafb; /* gray-50 */
+        --color-bg-muted: #f3f4f6; /* gray-100 */
+        --color-border-base: #e5e7eb; /* gray-200 */
+        --color-border-muted: #d1d5db; /* gray-300 */
+      }
+      .dark {
+        --color-primary: #38bdf8; /* sky-400 */
+        --color-primary-hover: #0ea5e9; /* sky-500 */
+        --color-secondary: #6366f1; /* indigo-500 */
+        --color-text-base: #e2e8f0; /* slate-200 */
+        --color-text-muted: #94a3b8; /* slate-400 */
+        --color-bg-base: #0f172a; /* slate-900 */
+        --color-bg-muted: #1e293b; /* slate-800 */
+        --color-border-base: #334155; /* slate-700 */
+        --color-border-muted: #475569; /* slate-600 */
+      }
+
       /* Custom selection color */
       ::selection {
-        background-color: #0ea5e9; /* primary color */
+        background-color: var(--color-primary);
         color: #ffffff;
       }
 
       /* Base styles for light and dark mode */
       body {
-        /* Light mode default */
-        background-color: #f9fafb; /* gray-50 */
-        background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
+        background-color: var(--color-bg-base);
+        background-image: radial-gradient(var(--color-border-base) 1px, transparent 1px);
         background-size: 16px 16px;
-      }
-      .dark body {
-        /* Dark mode */
-        background-color: #0f172a; /* slate-900 */
-        background-image: radial-gradient(#33415533 1px, transparent 1px);
+        color: var(--color-text-base);
       }
       
       /* Animation Keyframes */
@@ -80,7 +104,7 @@
 </script>
 <link rel="stylesheet" href="/index.css">
 </head>
-  <body class="text-gray-800 dark:text-slate-300 transition-colors duration-300">
+  <body class="transition-colors duration-300">
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
   </body>

@@ -77,7 +77,7 @@ interface TemplateContextType {
   // Core State
   templateTokens: Token[];
   variables: Variable[];
-  formData: FormData;
+  formData: TemplateFormData;
   outputText: string;
   selection: Selection | null;
   isModalOpen: boolean;
@@ -197,7 +197,7 @@ const TemplateContext = createContext<TemplateContextType | undefined>(undefined
 
 const generateId = () => Date.now().toString(36) + Math.random().toString(36).substring(2);
 
-type FormData = Record<string, any>;
+type TemplateFormData = Record<string, any>;
 
 // --- DEMO DATA ---
 const DEMO_VARIABLES: Variable[] = [
@@ -219,7 +219,7 @@ const DEMO_TOKENS: Token[] = [
     { type: 'string', content: '\n\nKey Accomplishments:\n' },
     { type: 'variable', variableId: 'demo4', name: 'key_accomplishments', originalText: '- Finalized content calendar for Instagram.\n- Ran A/B tests on Twitter ad copy.\n- Grew follower count by 5%.' },
 ];
-const DEMO_FORM_DATA: FormData = {
+const DEMO_FORM_DATA: TemplateFormData = {
     project_name: 'Q4 Social Media Push',
     report_date: '2024-01-15',
     prepared_by: 'Bob Williams',
@@ -255,7 +255,7 @@ export const TemplateProvider: React.FC<{children: React.ReactNode}> = ({ childr
   
   const [templateTokens, setTemplateTokens] = useState<Token[]>([{ type: 'string', content: '' }]);
   const [variables, setVariables] = useState<Variable[]>([]);
-  const [formData, setFormData] = useState<FormData>({});
+  const [formData, setFormData] = useState<TemplateFormData>({});
   
   const [selection, setSelection] = useState<Selection | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -542,7 +542,7 @@ export const TemplateProvider: React.FC<{children: React.ReactNode}> = ({ childr
     }).join('');
   }, [templateTokens, variables]);
 
-  const getOutputForRow = useCallback((rowData: FormData) => {
+  const getOutputForRow = useCallback((rowData: TemplateFormData) => {
     let output = templateString;
     variables.forEach(variable => {
       const value = rowData[variable.name];
@@ -714,7 +714,7 @@ export const TemplateProvider: React.FC<{children: React.ReactNode}> = ({ childr
     setFormData(data => {
       const newData = { ...data };
       delete newData[variableToDelete.name];
-      return data;
+      return newData;
     });
     clearCsvData();
   };
@@ -902,7 +902,7 @@ export const TemplateProvider: React.FC<{children: React.ReactNode}> = ({ childr
       return;
     }
 
-    const newTemplate = {
+    const newTemplate: Omit<SavedTemplate, 'id' | 'created_at'> = {
       name,
       folder_id,
       workspace_id: activeWorkspaceId,
@@ -923,7 +923,7 @@ export const TemplateProvider: React.FC<{children: React.ReactNode}> = ({ childr
   const loadTemplate = (template: SavedTemplate) => {
     setTemplateTokens(template.tokens as Token[]);
     setVariables(template.variables as Variable[]);
-    const newFormData: FormData = {};
+    const newFormData: TemplateFormData = {};
     (template.variables as Variable[]).forEach(v => {
       newFormData[v.name] = getInitialValueForType(v.type);
     });
@@ -1089,7 +1089,7 @@ export const TemplateProvider: React.FC<{children: React.ReactNode}> = ({ childr
       setSelectedCsvRowIndex(0);
       setRawCsvData(null);
       setIsCsvMappingModalOpen(false);
-      const newFormData: FormData = {};
+      const newFormData: TemplateFormData = {};
       variables.forEach(v => {
         newFormData[v.name] = getInitialValueForType(v.type);
       });
@@ -1236,7 +1236,7 @@ export const TemplateProvider: React.FC<{children: React.ReactNode}> = ({ childr
       }
       setTemplateTokens(newTokens);
 
-      const newFormData: FormData = {};
+      const newFormData: TemplateFormData = {};
       newVariables.forEach(v => {
         newFormData[v.name] = getInitialValueForType(v.type);
       });
@@ -1265,7 +1265,7 @@ export const TemplateProvider: React.FC<{children: React.ReactNode}> = ({ childr
 
     let tempTemplateString = templateString;
     const newVariables: Variable[] = [];
-    const newFormData: FormData = {};
+    const newFormData: TemplateFormData = {};
 
     suggestions.forEach((suggestion) => {
       const newVar: Variable = {
